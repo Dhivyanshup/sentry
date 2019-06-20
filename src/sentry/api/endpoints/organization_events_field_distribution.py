@@ -9,7 +9,7 @@ from sentry import features, tagstore
 from sentry.tagstore.base import TOP_VALUES_DEFAULT_LIMIT
 
 
-class OrganizationEventsHeatmapEndpoint(OrganizationEventsEndpointBase):
+class OrganizationEventsFieldDistributionEndpoint(OrganizationEventsEndpointBase):
     def get(self, request, organization):
         # If requested key is project.name, get the project.id from Snuba
         # and it back to the name
@@ -42,7 +42,7 @@ class OrganizationEventsHeatmapEndpoint(OrganizationEventsEndpointBase):
             aggregations=[('count()', None, 'count')],
             orderby='-count',
             limit=TOP_VALUES_DEFAULT_LIMIT,
-            referrer='api.organization-events-heatmap',
+            referrer='api.organization-events-field-distribution',
         )['data']
 
         projects = {p.id: p.slug for p in self.get_projects(request, organization)}
